@@ -12,6 +12,8 @@ The template comes pre-installed with everything you need to build a full-stack 
 
 Once combined with your ServiceNow development expertise, you can deliver modern full-stack applications to your users in no time.
 
+**PLEASE NOTE:** Building this template will only work in a local node environment e.g. via VS Code. Support for ServiceNow IDE is not currently included.
+
 ---
 
 ## 🖥️ Local Development
