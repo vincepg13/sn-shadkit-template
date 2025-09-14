@@ -6,6 +6,7 @@ target/
 *.tsbuildinfo
 .jest_cache
 src/client/index.build.css
+/src/fluent/generated/
 
 # Logs
 logs

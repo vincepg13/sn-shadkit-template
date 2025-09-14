@@ -43,14 +43,13 @@
     "react": "19.x",
     "react-dom": "19.x",
     "react-router": "^7.8.2",
-    "sn-shadcn-kit": "^1.5.2",
+    "sn-shadcn-kit": "^1.5.5",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.13",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.5.4",
     "vite": "^7.1.5"
   },
-  "dependencies": {},
   "overrides": {
     "shadcn-dropzone": {
       "react": "^19.0.0",
