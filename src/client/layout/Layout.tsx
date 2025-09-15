@@ -10,7 +10,7 @@ export default function Layout() {
   const location = useLocation();
 
   return (
-    <div className="w-full h-full bg-background text-foreground">
+    <div className="w-full min-h-screen bg-background text-foreground">
       <main className="flex flex-col flex-1 p-4 gap-4">
         <div className="flex justify-between items-center w-full gap-1">
           <WidthSwitch />

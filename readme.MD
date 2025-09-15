@@ -97,6 +97,8 @@ To make Vite, Tailwind, and Shadcn work with ServiceNow’s Rollup build process
 - **nodeResolve Plugin** – Handle resolution of hoisted dependencies in `node_modules`.  
 - **url Plugin** – Map image imports from `src/client/assets` to their deployed counterparts.
 
+*Quick note on tailwind* - If you find when deploying to ServiceNow some tailwind classes you have added to your app do not get applied, then go to the sys_app record for your scope and find the index.build.css application file and delete it, then re-deploy the app. I have noticed sometimes this file doesn't get refreshed when changes have been made to it and i'm not sure why.
+
 ---
 
 ## 🧹 Cleaning Up

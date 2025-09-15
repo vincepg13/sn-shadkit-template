@@ -12,9 +12,14 @@
 /* Tailwin scan shadcn kit */
 @source "../../node_modules/sn-shadcn-kit/dist/**/*.{js,mjs}";
 
-/* Undo servicenow variables overriding table styling */
+/* Undo servicenow variables overriding styling */
 @layer base {
   #root :where(table, thead, tbody, th, td) {
+    color: var(--foreground) !important;
+  }
+
+  html {
+    background: var(--background) !important;
     color: var(--foreground) !important;
   }
 }
@@ -82,8 +87,8 @@
 }
 
 @theme inline {
-  --font-inter: 'Inter', 'sans-serif';
-  --font-manrope: 'Manrope', 'sans-serif';
+  --font-inter: "Inter", "sans-serif";
+  --font-manrope: "Manrope", "sans-serif";
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -136,7 +141,7 @@
   }
 
   button:not(:disabled),
-  [role='button']:not(:disabled) {
+  [role="button"]:not(:disabled) {
     cursor: pointer;
   }
 
@@ -173,10 +178,10 @@
 .CollapsibleContent {
   overflow: hidden;
 }
-.CollapsibleContent[data-state='open'] {
+.CollapsibleContent[data-state="open"] {
   animation: slideDown 300ms ease-out;
 }
-.CollapsibleContent[data-state='closed'] {
+.CollapsibleContent[data-state="closed"] {
   animation: slideUp 300ms ease-out;
 }
 
