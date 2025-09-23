@@ -1,11 +1,18 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable @servicenow/sdk-app-plugin/no-unsupported-node-builtins */
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { getTableRoutingData } from "@/lib/table-utils";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
-import { DataTable, SnDataTableSkeleton, SnTableUtils, SortingState, Updater } from "sn-shadcn-kit";
+import { getTableRoutingData } from "@/lib/table-utils";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import {
+  DataTable,
+  SnDataTableSkeleton,
+  resolveUpdater,
+  getSortedQuery,
+  SortingState,
+  Updater,
+} from "sn-shadcn-kit/table";
 
 //Static fields instead of loading a view
 const problemFields = [
@@ -36,7 +43,7 @@ export function DemoPage() {
 
   //On page number or size change, update the URL params or set a new page size
   const handlePageChange = (updater: Updater<{ pageIndex: number; pageSize: number }>) => {
-    const newState = SnTableUtils.resolveUpdater(updater, { pageIndex: data.pageIndex, pageSize: data.pageSize });
+    const newState = resolveUpdater(updater, { pageIndex: data.pageIndex, pageSize: data.pageSize });
     if (newState.pageSize !== pageSize) setPageSize(newState.pageSize);
 
     const next = new URLSearchParams(sp);
@@ -46,8 +53,8 @@ export function DemoPage() {
 
   //On sort change, update the URL params with the mapped query
   const handleSortChange = (updater: Updater<SortingState>) => {
-    const newSorting = SnTableUtils.resolveUpdater(updater, data.sorting);
-    const query = SnTableUtils.getSortedQuery(newSorting, data.query);
+    const newSorting = resolveUpdater(updater, data.sorting);
+    const query = getSortedQuery(newSorting, data.query);
 
     const next = new URLSearchParams(sp);
     next.set("query", query);
@@ -60,11 +67,13 @@ export function DemoPage() {
       <Alert>
         <AlertTitle className="flex gap-2 items-center justify-between border-b pb-2 mb-1 text-lg">
           <span>Tanstack Query: Problem Table Demo</span>
-          <img src="https://avatars.githubusercontent.com/u/72518640?s=280&v=4" className="w-8"/>
+          <img src="https://avatars.githubusercontent.com/u/72518640?s=280&v=4" className="w-8" />
         </AlertTitle>
         <AlertDescription className="text-base">
-          This demo page shows how to use the DataTable component from sn-shadcn-kit with data fetching via Tanstack Query. This means each route is cached, e.g. going from 
-          one page on the table to another and then back will not trigger a new fetch. A useful pattern so you don't have to rely on individual components fetching their own data.
+          This demo page shows how to use the DataTable component from sn-shadcn-kit with data fetching via Tanstack
+          Query. This means each route is cached, e.g. going from one page on the table to another and then back will
+          not trigger a new fetch. A useful pattern so you don't have to rely on individual components fetching their
+          own data.
         </AlertDescription>
       </Alert>
       {isLoading ? (

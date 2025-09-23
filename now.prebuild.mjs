@@ -10,8 +10,13 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { servicenowFrontEndPlugins, rollup, glob } from "@servicenow/isomorphic-rollup";
 
 export default async ({ rootDir, config, fs, path, logger, registerExplicitId }) => {
+  const require = createRequire(import.meta.url);
   const clientDir = path.join(rootDir, config.clientDir);
-  const htmlFiles = await glob(path.join("**", "*.html"), { cwd: clientDir, fs });
+  const htmlFiles = await glob(path.join("**", "*.html"), {
+    cwd: clientDir,
+    fs,
+  });
+
   if (!htmlFiles.length) {
     logger.warn(`No HTML files found in ${clientDir}, skipping UI build.`);
     return;
@@ -22,8 +27,9 @@ export default async ({ rootDir, config, fs, path, logger, registerExplicitId })
 
   // --- Tailwind via PostCSS CLI (index.css -> index.build.css) ---
   try {
-    const require = createRequire(import.meta.url);
-    const postcssPkgPath = require.resolve("postcss-cli/package.json", { paths: [rootDir] });
+    const postcssPkgPath = require.resolve("postcss-cli/package.json", {
+      paths: [rootDir],
+    });
     const postcssBinRel = JSON.parse(fs.readFileSync(postcssPkgPath, "utf8")).bin.postcss;
     const postcssBin = nodepath.resolve(nodepath.dirname(postcssPkgPath), postcssBinRel);
 
@@ -47,18 +53,19 @@ export default async ({ rootDir, config, fs, path, logger, registerExplicitId })
   // --- end Tailwind step ---
 
   // --- Vite ENV generation step ---
-  dotenv.config({ path: path.join(rootDir, ".env.production"), override: true });
+  dotenv.config({
+    path: path.join(rootDir, ".env.production"),
+    override: true,
+  });
   dotenv.config({ path: path.join(rootDir, ".env"), override: false });
 
   const envForClient = {
     MODE: "production",
     DEV: false,
     PROD: true,
-    BASE_URL: "./", // optional but Vite usually provides this
+    BASE_URL: "./",
   };
   // --- end vite step ---
-
-  // const rootNodeModules = nodepath.join(rootDir, 'node_modules');
 
   /**
    * Rollup Bundle Changes
@@ -80,6 +87,7 @@ export default async ({ rootDir, config, fs, path, logger, registerExplicitId })
         exportConditions: ["production", "browser", "module", "default"],
         extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
         jail: rootDir,
+        dedupe: ["eslint-linter-browserify", "@eslint/js", "espree"],
       }),
       url({
         include: ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.gif", "**/*.webp", "**/*.avif", "**/*.svg"],
@@ -102,9 +110,41 @@ export default async ({ rootDir, config, fs, path, logger, registerExplicitId })
     ],
   });
 
+  // Added manualChunks to optimize large libraries into their own js files
   const rollupOutput = await rollupBundle.write({
     dir: staticContentDir,
-    sourcemap: true,
+    sourcemap: false,
+    manualChunks(id) {
+      if (!id.includes(`${path.sep}node_modules${path.sep}`)) return;
+      const norm = id.split(path.sep).join("/");
+
+      // Group TipTap + ProseMirror + lowlight into one chunk
+      if (
+        norm.includes("/node_modules/@tiptap/") ||
+        norm.includes("/node_modules/prosemirror-") ||
+        norm.includes("/node_modules/lowlight/")
+      ) {
+        return "tiptap";
+      }
+
+      // Group all CodeMirror related modules into one chunk
+      if (
+        norm.includes("/node_modules/@codemirror/") ||
+        norm.includes("/node_modules/@uiw/codemirror") ||
+        norm.includes("/node_modules/@replit/codemirror-")
+      ) {
+        return "codemirror";
+      }
+
+      // Group all ESLint related modules into one chunk
+      if (
+        norm.includes("/node_modules/eslint-linter-browserify") ||
+        norm.includes("/node_modules/@eslint/js") ||
+        norm.includes("/node_modules/espree")
+      ) {
+        return "eslint";
+      }
+    },
   });
 
   // Print the build results
