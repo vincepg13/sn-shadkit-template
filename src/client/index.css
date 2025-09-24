@@ -1,10 +1,12 @@
 /* Tailwind V4 */
 @import "tailwindcss";
-@config "./tailwind.config.cjs";
-@plugin "tailwindcss-animate";
 
 /* Needed for tiptap styles inheritance */
 @import "./styles/tiptap/index.css";
+
+/* Tailwind config */
+@config "./tailwind.config.cjs";
+@plugin "tailwindcss-animate";
 
 /* Tailwind scan app files */
 @source "./**/*.{ts,tsx,js,jsx}";
