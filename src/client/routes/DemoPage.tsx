@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable @servicenow/sdk-app-plugin/no-unsupported-node-builtins */
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import { getTableRoutingData } from "@/lib/table-utils";
@@ -29,7 +27,7 @@ const problemFields = [
 export const demoQuery = (page: number, query: string, pageSize: number) => ({
   queryKey: ["demoData", page, query, pageSize],
   placeholderData: keepPreviousData,
-  queryFn: async ({ signal }) => await getTableRoutingData("problem", page, pageSize, query, problemFields, signal),
+  queryFn: async ({ signal }: {signal: AbortSignal}) => await getTableRoutingData("problem", page, pageSize, query, problemFields, signal),
 });
 
 export function DemoPage() {
@@ -40,6 +38,7 @@ export function DemoPage() {
 
   //Execute the query
   const { data, isLoading } = useQuery(demoQuery(page, query, pageSize));
+  if (!data) return <div>Loading...</div>;
 
   //On page number or size change, update the URL params or set a new page size
   const handlePageChange = (updater: Updater<{ pageIndex: number; pageSize: number }>) => {

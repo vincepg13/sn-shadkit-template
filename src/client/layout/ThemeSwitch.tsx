@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import { cn } from '@/lib/utils'
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'

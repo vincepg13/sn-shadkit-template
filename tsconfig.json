@@ -10,7 +10,10 @@
     "declaration": false,
     "sourceMap": false,
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "strict": true,
+    "types": [
+      "vite/client"
+    ],
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "baseUrl": ".",
@@ -25,6 +28,7 @@
     "./**/*.tsx"
   ],
   "exclude": [
-    "**/*.now.ts"
+    "**/*.now.ts",
+    "**/*.js",
   ]
 }

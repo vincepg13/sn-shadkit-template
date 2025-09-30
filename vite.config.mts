@@ -62,6 +62,14 @@ export default defineConfig(({ mode }) => {
           secure: false,
           configure: injectCookie,
         },
+        "/amb": {
+          target: devUrl,
+          changeOrigin: true,
+          secure: false,
+          ws: true,
+          configure: injectCookie,
+          headers: { Origin: devUrl },
+        },
       },
       fs: {
         allow: [".."],

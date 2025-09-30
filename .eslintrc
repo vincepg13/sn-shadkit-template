@@ -1,8 +1,70 @@
 {
-  "env": { "node": true, "browser": true, "es2022": true },
+  "env": {
+    "node": true,
+    "browser": true,
+    "es2022": true
+  },
   "parser": "@typescript-eslint/parser",
-  "parserOptions": { "ecmaVersion": "latest", "sourceType": "module", "ecmaFeatures": { "jsx": true } },
-  "plugins": ["n","@servicenow/sdk-app-plugin","@typescript-eslint"],
-  "extends": ["plugin:@typescript-eslint/recommended","plugin:@servicenow/sdk-app-plugin/recommended"],
-  "overrides": [{ "files": ["**/*.ts","**/*.tsx"], "parser": "@typescript-eslint/parser" }]
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "n",
+    "@servicenow/sdk-app-plugin",
+    "@typescript-eslint",
+    "react-hooks"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@servicenow/sdk-app-plugin/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "globals": {
+    "gs": "readonly",
+    "GlideRecord": "readonly",
+    "GlideRecordSecure": "readonly",
+    "GlideDate": "readonly",
+    "GlideDateTime": "readonly",
+    "GlideAggregate": "readonly",
+    "current": "readonly",
+    "sn_ws": "readonly",
+    "sn_ws_err": "readonly",
+    "Class": "readonly",
+    "ScriptConsoleUtils": "readonly",
+    "request": "readonly",
+    "response": "readonly"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "parser": "@typescript-eslint/parser"
+    },
+    {
+      "files": [
+        "src/fluent/**/*.js"
+      ],
+      "rules": {
+        "no-undef": "error",
+        "@servicenow/sdk-app-plugin/no-unsupported-node-builtins": "off"
+      }
+    },
+    {
+      "files": [
+        "src/client/**/*.ts",
+        "src/client/**/*.tsx"
+      ],
+      "rules": {
+        "no-restricted-globals": "off",
+        "@servicenow/sdk-app-plugin/file-extension-in-import": "off",
+        "@servicenow/sdk-app-plugin/no-unsupported-node-builtins": "off"
+      }
+    }
+  ]
 }
