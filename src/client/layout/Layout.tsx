@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import { ThemeSwitch } from "@/layout/ThemeSwitch";
 import { WidthSwitch } from "@/layout/WidthSwitch";
 import { Link, Outlet, useLocation } from "react-router";
