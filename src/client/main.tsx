@@ -1,3 +1,6 @@
+//IMPORTANT - JS polyfills for SN
+import '@/polyfills/array-from-iterable';
+
 import React from "react";
 import "./index.build.css";
 import { makeRouter } from "./router.tsx";
