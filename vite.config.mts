@@ -62,6 +62,12 @@ export default defineConfig(({ mode }) => {
           secure: false,
           configure: injectCookie,
         },
+        "/xmlhttp.do": {
+          target: devUrl,
+          changeOrigin: true,
+          secure: false,
+          configure: injectCookie,
+        },
         "/amb": {
           target: devUrl,
           changeOrigin: true,
