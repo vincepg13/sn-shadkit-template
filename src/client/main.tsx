@@ -1,4 +1,5 @@
 //IMPORTANT - JS polyfills for SN
+import '@/polyfills/array-entries.ts';
 import '@/polyfills/array-from-iterable';
 
 import React from "react";
