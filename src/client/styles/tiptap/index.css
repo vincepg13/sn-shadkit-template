@@ -1,8 +1,8 @@
-@import "./code.css";
-@import "./placeholder.css";
-@import "./lists.css";
-@import "./typography.css";
-@import "./zoom.css";
+@import './code.css';
+@import './placeholder.css';
+@import './lists.css';
+@import './typography.css';
+@import './zoom.css';
 
 :root {
   --mt-overlay: rgba(251, 251, 251, 0.75);
@@ -146,7 +146,14 @@
 
 .minimal-tiptap-editor .ProseMirror blockquote::before,
 .minimal-tiptap-editor .ProseMirror blockquote.is-empty::before {
-  @apply bg-accent-foreground/15 absolute top-0 bottom-0 left-0 h-full w-1 rounded-sm content-[''];
+  @apply absolute top-0 bottom-0 left-0 h-full w-1 rounded-sm;
+
+  /* replace bg-accent-foreground/15 */
+  background-color: var(--color-accent-foreground);
+  opacity: 0.15;
+
+  /* replace content-[''] */
+  content: '';
 }
 
 .minimal-tiptap-editor .ProseMirror hr {
