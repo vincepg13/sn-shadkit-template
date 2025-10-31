@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 type Font = (typeof fonts)[number]
-const fonts = ['inter', 'manrope', 'system'] as const
+const fonts = ['font-inter', 'font-manrope', 'font-system'] as const
 
 interface FontContextType {
   font: Font
@@ -22,10 +22,12 @@ export const FontProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const applyFont = (font: string) => {
       const root = document.documentElement
+
       root.classList.forEach((cls) => {
         if (cls.startsWith('font-')) root.classList.remove(cls)
       })
-      root.classList.add(`font-${font}`)
+
+      root.classList.add(`${font}`)
     }
 
     applyFont(font)
