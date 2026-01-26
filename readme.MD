@@ -110,3 +110,4 @@ Once you’re happy with the template and ready to transform it into your own ap
 - Configure `src/client/queryClient.ts` to set your preferred TanStack Query options.  
 - Update the `<title>` in `src/client/index.html`.  
 - Update `package.json` with an appropriate name for your application.
+- update `AGENTS.md` with any specific context for your chosen AI model to assist you in building out your application.
