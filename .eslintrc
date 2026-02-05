@@ -34,7 +34,6 @@
     "sn_ws": "readonly",
     "sn_ws_err": "readonly",
     "Class": "readonly",
-    "ScriptConsoleUtils": "readonly",
     "request": "readonly",
     "response": "readonly"
   },

@@ -102,6 +102,16 @@ To make Vite, Tailwind, and Shadcn work with ServiceNow’s Rollup build process
 
 ---
 
+## 🤖 AI Agents
+
+The template comes equipped with an `AGENTS.md` file that should help give the necessary context and constraints to working within a ServiceNow fluent/react application. Your AI assistant (claude, codex, gemini etc) should automatically pick this up, but double check if there is any configuration needed with their respective docs.
+
+As you begin building out your application, if you notice incorrect behaviour from your agentic coding assistant, then you should make updates to this file to resolve the issue.
+
+When working with `*.server.js` files, remember to add global ServiceNow objects (e.g. `GlideRecord`, `gs`) to `.eslintrc` to avoid linting errors.
+
+---
+
 ## 🧹 Cleaning Up
 Once you’re happy with the template and ready to transform it into your own application, clean up any unnecessary files:
 - Clear the `src/client/assets` folder. (Use this folder for any media assets to be sent to ServiceNow.)  
