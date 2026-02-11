@@ -18,15 +18,50 @@ Once combined with your ServiceNow development expertise, you can deliver modern
 
 ## 🖥️ Local Development
 
-Start by getting the template running locally:
+Start by getting the template running locally.
 
-1. Clone or fork this repository, then cd into it.
-2. If you cloned it and want a fresh base, delete the `.git` folder.  
-3. Install dependencies:  
-   - Run: `npm install`  
-4. Create a `.env` file in the project root with the required variables (see below).  
-5. Start the dev server:  
-   - Run: `npm run dev`
+**This branch (`sidebar-layout`) includes a sidebar + navigation header layout.**  
+If you want the minimal starter instead, use the `main` branch.
+
+---
+
+### 1️⃣ Clone This Branch
+
+Change `my-app` to whatever you want your project to be called:
+
+```bash
+git clone -b sidebar-layout --single-branch https://github.com/vincepg13/sn-shadkit-template.git my-app
+cd my-app
+```
+
+### 2️⃣ Remove Template Git History & Reinitialize
+
+This ensures your project starts with a clean `main` branch and no template commit history:
+
+```bash
+rm -rf .git
+git init -b main
+git add .
+git commit -m "Initial commit"
+```
+
+### 3️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+### 4️⃣ Configure Environment
+
+Create a `.env` file in the project root with the required variables (see below).
+
+### 5️⃣ Start the Development Server
+
+```bash
+npm run dev
+```
+
+---
 
 If successful, you should see the following preview:
 
