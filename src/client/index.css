@@ -22,6 +22,14 @@
     color: var(--foreground) !important;
   }
 
+  .dark {
+    .group-data-\[side\=left\]\:border-r {
+      &:is(:where(.group)[data-side="left"] *) {
+        border-color: var(--sidebar-border) !important;
+      }
+    }
+  }
+
   html {
     background: var(--background) !important;
     color: var(--foreground) !important;
