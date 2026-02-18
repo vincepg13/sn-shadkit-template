@@ -61,6 +61,7 @@
       ],
       "rules": {
         "no-restricted-globals": "off",
+        "react-hooks/set-state-in-effect": "off",
         "@servicenow/sdk-app-plugin/file-extension-in-import": "off",
         "@servicenow/sdk-app-plugin/no-unsupported-node-builtins": "off"
       }

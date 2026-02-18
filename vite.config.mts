@@ -21,8 +21,6 @@ export default defineConfig(({ mode }) => {
   const devUrl = env.VITE_DEV_URL;
   const snCookie = env.VITE_SPOOF_COOKIE;
 
-  console.log("Vite Config - Dev URL:", devUrl);
-
   const injectCookie = (proxy: any) => {
     // For HTTP(S) requests
     proxy.on("proxyReq", (proxyReq: any) => {

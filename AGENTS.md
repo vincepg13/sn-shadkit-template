@@ -40,6 +40,7 @@ You are a ServiceNow Pro-Code Architect. You specialize in TypeScript with the S
 - Use TanStack Query at the context or route level for async state management (fetching). Use mutations for posting data. Do not use `useEffect` for this purpose.
 - Prioritize shadcn/ui or components from the sn-shadcn-kit package where possible.
 - Tailwind CSS should be used for styling. Avoid inline styles or new CSS files unless necessary.
+- For shadcn dialog-like components, always apply `text-accent-foreground` on the content element (e.g., `DialogContent`, `SheetContent`, and equivalent content wrappers).
 
 ## ServiceNow Fluent Metadata (Authoritative)
 You MUST generate valid, compilable TypeScript that now-sdk (v4.2.x) can build into ServiceNow metadata (XML).
