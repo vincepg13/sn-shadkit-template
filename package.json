@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
+    "prebuild": "node scripts/confirm-build.mjs",
     "build": "now-sdk build",
     "deploy": "now-sdk install",
     "transform": "now-sdk transform",
@@ -23,7 +24,7 @@
     "@servicenow/eslint-plugin-sdk-app-plugin": "4.0.0",
     "@servicenow/glide": "26.0.1",
     "@servicenow/isomorphic-rollup": "^1.2.1",
-    "@servicenow/sdk": "4.1.1",
+    "@servicenow/sdk": "4.2.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-query": "^5.87.4",
@@ -35,8 +36,8 @@
     "axios": "^1.13.5",
     "class-variance-authority": "^0.7.1",
     "dotenv": "^17.2.2",
-    "eslint": "8.50.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint": "8.57.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "lucide-react": "^0.543.0",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
@@ -55,6 +56,8 @@
     "zod": "^4.1.12"
   },
   "overrides": {
+    "minimatch": "^10.2.2",
+    "glob": "^10.4.5",
     "shadcn-dropzone": {
       "react": "^19.0.0",
       "react-dom": "^19.0.0"
