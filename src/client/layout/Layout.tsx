@@ -25,7 +25,7 @@ export default function Layout() {
     <SidebarProvider defaultOpen={true} open={open} onOpenChange={setOpen} style={sidebarStyle}>
       <AppSidebar />
 
-      <div className="h-screen w-full bg-background text-foreground overflow-x-auto">
+      <div className="h-screen w-full bg-background text-foreground overflow-hidden">
         {/* <Toaster
           richColors
           duration={5000}
