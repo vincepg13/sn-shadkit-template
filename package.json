@@ -24,7 +24,7 @@
     "@servicenow/eslint-plugin-sdk-app-plugin": "4.0.0",
     "@servicenow/glide": "26.0.1",
     "@servicenow/isomorphic-rollup": "^1.2.1",
-    "@servicenow/sdk": "4.2.0",
+    "@servicenow/sdk": "^4.3.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-query": "^5.87.4",

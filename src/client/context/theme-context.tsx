@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type AppWidth = "fixed" | "fluid";
 type Theme = "dark" | "light" | "system";
-type Ctx = { theme: Theme; setTheme: (t: Theme) => void, width: AppWidth; setWidth: (w: AppWidth) => void };
+type Ctx = { theme: Theme; setTheme: (t: Theme) => void; width: AppWidth; setWidth: (w: AppWidth) => void };
 
 const ThemeCtx = createContext<Ctx>({ theme: "system", setTheme: () => {}, width: "fixed", setWidth: () => {} });
 
@@ -15,7 +15,7 @@ export function ThemeProvider({
   defaultTheme = "system",
   themeStorageKey = "vite-ui-theme",
   defaultWidth = "fixed",
-  widthStorageKey = "vite-ui-width"
+  widthStorageKey = "vite-ui-width",
 }: {
   children: React.ReactNode;
   defaultTheme?: Theme;
@@ -24,15 +24,21 @@ export function ThemeProvider({
   widthStorageKey?: string;
 }) {
   const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem(themeStorageKey) as Theme) || defaultTheme);
-  const [width, setWidth] = useState<AppWidth>(() => (localStorage.getItem(widthStorageKey) as AppWidth) || defaultWidth);
+  const [width, setWidth] = useState<AppWidth>(
+    () => (localStorage.getItem(widthStorageKey) as AppWidth) || defaultWidth,
+  );
 
   useEffect(() => {
     const next = resolve(theme);
     const els: Element[] = [document.documentElement, document.body, document.getElementById("root")!].filter(
-      Boolean
+      Boolean,
     ) as Element[];
 
     els.forEach((el) => {
+      // permanent theme token classes for SN host shell integration
+      el.classList.add("bg-background", "text-foreground");
+
+      // dynamic mode class
       el.classList.remove("light", "dark");
       el.classList.add(next);
     });

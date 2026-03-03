@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "../../dist/server",
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "declaration": false,
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "types": [
+      "vite/client"
+    ],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "**/*.now.ts",
+    "**/*.js",
+  ]
+}
