@@ -24,9 +24,13 @@ Start by getting the template running locally:
 2. If you cloned it and want a fresh base, delete the `.git` folder.  
 3. Install dependencies:  
    - Run: `npm install`  
-4. Create a `.env` file in the project root with the required variables (see below).  
+4. Authenticate with the ServiceNow SDK for the instance you want to develop against:  
+   - Run: `npx @servicenow/sdk auth --add <instance>`  
+   - Follow the prompts to connect and save an authentication profile.  
 5. Start the dev server:  
    - Run: `npm run dev`
+
+The Vite dev server now reads the instance URL and authentication details directly from your saved ServiceNow SDK session, so no project `.env` file is required for local development.
 
 If successful, you should see the following preview:
 
@@ -34,35 +38,10 @@ If successful, you should see the following preview:
 
 ---
 
-### 🔑 Environment Variables
-
-The `.env` file provides Vite with the details it needs to run locally and authenticate with your ServiceNow instance. Each variable is defined on its own line, wrapped in single quotes (e.g., `VITE_TEST_VARIABLE='Testing'`).
-
-**Required variable:**
-- `VITE_DEV_URL` – The full URL of the ServiceNow instance to connect to (e.g. `https://xxx.service-now.com/`).
-
-**Authentication options (choose one):**
-1. **🔐 Basic Authentication**  
-   - `VITE_REACT_APP_USER` – Username of the ServiceNow profile (e.g. `abel.tuter`).  
-   - `VITE_REACT_APP_PASSWORD` – Password for that profile.  
-
-   ⚠️ Basic auth is quick but only works with local accounts without MFA. Some ServiceNow endpoints do not accept it.
-
-2. **🍪 Cookie-based Authentication**  
-You will need to be logged into a ServiceNow instance and use your browsers developer console to retrieve the below values.
-   - `VITE_SPOOF_TOKEN` – In the console type in `window.g_ck` and copy the result.  
-   - `VITE_SPOOF_COOKIE` – Open the network tab, find a ServiceNow bound network request (e.g. the *presence* request), Copy the full `Cookie` request header.  
-
-   Cookies last as long as the active ServiceNow session. If you’re logged out, you’ll need to repeat this step. Although less convenient, cookie auth works with all accounts and replicates the behavior of running inside ServiceNow.
-
-These variables are used **only** by the dev server. They are not included in the ServiceNow build. In production, the app only has access to baseline variables (mode/dev/prod/baseUrl).
-
----
-
 ## 🚀 Build & Deploy to ServiceNow
 Once local development is working, prepare to build and deploy to your ServiceNow instance:
 
-1. Authenticate with the SDK:  
+1. Authenticate with the SDK if you have not already done so:  
    - Run: `npx @servicenow/sdk auth --add <instance>`  
    - Follow the prompts to connect and save an authentication profile.
 
