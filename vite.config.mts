@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @servicenow/sdk-app-plugin/no-unsupported-node-builtins */
 import path from "path";
-import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwind from "@tailwindcss/vite";
 import { fileURLToPath } from "node:url";
+import { defineConfig, type UserConfig } from "vite";
+import { getAuthCookie, getCredentials, getUserSession } from "@servicenow/sdk-cli/dist/auth/index.js";
 
 /**
  * Vite configuration for a ServiceNow build project. Only need development server
@@ -16,19 +17,30 @@ import { fileURLToPath } from "node:url";
  */
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd());
-  const devUrl = env.VITE_DEV_URL;
-  const snCookie = env.VITE_SPOOF_COOKIE;
+export default defineConfig(async ({}): Promise<UserConfig> => {
+  const creds = await getCredentials(undefined);
+  const session = await getUserSession(creds);
+
+  if (!session) {
+    throw new Error(
+      'Failed to load a ServiceNow SDK session for the Vite proxy. Run "now-sdk auth --add <instance>" and optionally set SN_SDK_CREDENTIAL_ALIAS.',
+    );
+  }
+
+  const devUrl = creds.instanceUrl;
+  const snCookie = getAuthCookie(session);
+  const snUserToken = session.userToken;
 
   const injectCookie = (proxy: any) => {
     // For HTTP(S) requests
     proxy.on("proxyReq", (proxyReq: any) => {
       if (snCookie) proxyReq.setHeader("Cookie", snCookie);
+      if (snUserToken) proxyReq.setHeader("X-UserToken", snUserToken);
     });
     // For WebSocket upgrade handshake
     proxy.on("proxyReqWs", (proxyReq: any) => {
       if (snCookie) proxyReq.setHeader("Cookie", snCookie);
+      if (snUserToken) proxyReq.setHeader("X-UserToken", snUserToken);
     });
   };
 

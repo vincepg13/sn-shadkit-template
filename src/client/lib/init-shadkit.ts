@@ -1,37 +1,10 @@
-/* eslint-disable no-restricted-globals */
 import axios from "axios";
-import { getAxiosInstance, setAxiosInstance } from "sn-shadcn-kit";
+import { setAxiosInstance } from "sn-shadcn-kit";
 
-declare global {
-  interface Window {
-    g_ck?: string;
-  }
-}
 
-function isDevelopment() {
-  const username = import.meta.env.VITE_REACT_APP_USER;
-  const tokenSpoof = import.meta.env.VITE_SPOOF_TOKEN;
+async function getCurrentUser() {
   const axiosInstance = axios.create({ withCredentials: true });
-
-  if (tokenSpoof) {
-    axiosInstance.defaults.headers["X-UserToken"] = tokenSpoof;
-  } else {
-    axiosInstance.defaults.auth = {
-      username,
-      password: import.meta.env.VITE_REACT_APP_PASSWORD,
-    };
-  }
-
   setAxiosInstance(axiosInstance);
-
-  return {
-    axiosInstance,
-    user: { username, guid: "dev-guid" },
-  };
-}
-
-async function isProduction() {
-  const axiosInstance = getAxiosInstance();
 
   const userRes = await axiosInstance.get("/api/now/table/sys_user", {
     params: {
@@ -54,7 +27,5 @@ async function isProduction() {
 }
 
 export async function bootstrapApp() {
-  const mode = import.meta.env.MODE;
-  const config = mode === "development" ? isDevelopment() : await isProduction();
-  return config;
+  return getCurrentUser();
 }
