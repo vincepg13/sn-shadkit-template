@@ -102,11 +102,11 @@ export default async ({ rootDir, config, fs, path, logger, registerExplicitId })
           "import.meta.env": JSON.stringify(envForClient),
         },
       }),
-      ...servicenowFrontEndPlugins({
+      ...(await servicenowFrontEndPlugins({
         scope: config.scope,
         rootDir: clientDir,
         registerExplicitId,
-      }),
+      })),
     ],
   });
 
