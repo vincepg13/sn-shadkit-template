@@ -22,7 +22,7 @@
     "@rollup/plugin-replace": "^6.0.2",
     "@rollup/plugin-url": "^8.0.2",
     "@servicenow/glide": "26.0.1",
-    "@servicenow/isomorphic-rollup": "^1.2.1",
+    "@servicenow/isomorphic-rollup": "^1.2.15",
     "@servicenow/sdk": "^4.5.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
