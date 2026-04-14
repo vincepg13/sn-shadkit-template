@@ -30,7 +30,7 @@ Start by getting the template running locally:
 5. Start the dev server:  
    - Run: `npm run dev`
 
-The Vite dev server now reads the instance URL and authentication details directly from your saved ServiceNow SDK session, so no project `.env` file is required for local development.
+The Vite dev server now reads the instance URL and authentication details directly from your saved ServiceNow SDK session, so no project `.env` file is required for local development. If the session expires, simply stop your dev server, then restart it.
 
 If successful, you should see the following preview:
 
