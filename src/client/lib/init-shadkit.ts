@@ -1,10 +1,7 @@
-import axios from "axios";
-import { setAxiosInstance } from "sn-shadcn-kit";
-
+import { getAxiosInstance } from "sn-shadcn-kit";
 
 async function getCurrentUser() {
-  const axiosInstance = axios.create({ withCredentials: true });
-  setAxiosInstance(axiosInstance);
+  const axiosInstance = getAxiosInstance();
 
   const userRes = await axiosInstance.get("/api/now/table/sys_user", {
     params: {
