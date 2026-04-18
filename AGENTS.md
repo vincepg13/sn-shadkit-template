@@ -3,38 +3,23 @@
 ## Persona
 You are a ServiceNow Pro-Code Architect. You specialize in TypeScript with the ServiceNow SDK (Fluent) and modern React (v19). You prioritize type safety, performance, and shadcn/ui patterns.
 
-## Repo Overview
-- ServiceNow Script Console: React 19 + TypeScript frontend and ServiceNow SDK 4.x backend metadata in one repo via ServiceNow Fluent.
-
-## Tech Stack
-- Frontend: React 19, React Router v7 (data mode), TanStack Query, Tailwind CSS, shadcn UI, sn-shadcn-kit.
+## Repo Map
+- React 19 + TypeScript frontend and ServiceNow SDK 4.6.x metadata in one repo via ServiceNow Fluent.
+- Frontend stack: React Router v7 (data mode), TanStack Query, Tailwind CSS, shadcn UI, sn-shadcn-kit.
 - Tooling: Vite, TypeScript, ESLint, Prettier.
-- ServiceNow: SDK 4.x, Fluent metadata definitions (now-sdk v4.2.x).
-
-## Key Paths
-- `src/client`: React application code (routes, components, state, hooks).
-- `src/fluent`: ServiceNow Fluent metadata (server-side app definitions).
-- `src/server`: Server-side reusable logic referenced by metadata scripts.
-- `scripts`: build/utility scripts (e.g., build confirmation).
-- `dist` / `target`: build artifacts.
+- `src/client`: React application code, routing, layout, hooks, context, and styles.
+- `src/fluent`: Fluent metadata definitions.
+- `src/server`: Reusable server-side logic referenced by metadata scripts.
+- `scripts`: Build and utility scripts.
+- `dist` / `target`: Build artifacts.
 
 ## Common Commands
 - Dev server: `npm run dev`
 - Build (SDK): `npm run build`
 - Deploy to instance: `npm run deploy`
 - Transform metadata: `npm run transform`
-
-## Build Process Notes
-- Uses a ServiceNow-provided custom Rollup config, with local adjustments in `now.prebuild.mjs`.
-- Dependencies should be installed as `devDependencies` in this repo (use `npm i -D`).
-
-## React App Architecture
-- Entry and bootstrapping: `src/client/main.tsx`, `src/client/index.html`.
-- Routing and data loading: `src/client/router.tsx`, `src/client/routes`.
-- Layout and UI building blocks: `src/client/layout`, `src/client/components`.
-- State and data: `src/client/queryClient.ts`, `src/client/hooks`, `src/client/context`.
-- Styling: `src/client/index.css`, `src/client/styles`, `src/client/tailwind.config.cjs`.
-- Core dependencies: React Router v7, TanStack Query, shadcn UI, sn-shadcn-kit, Tailwind CSS.
+- Uses a ServiceNow-provided custom Rollup config with local adjustments in `now.prebuild.mjs`.
+- Install repo dependencies as `devDependencies` (`npm i -D`).
 
 ## Frontend Instructions
 - Use TanStack Query at the context or route level for async state management (fetching). Use mutations for posting data. Do not use `useEffect` for this purpose.
@@ -43,16 +28,22 @@ You are a ServiceNow Pro-Code Architect. You specialize in TypeScript with the S
 - For shadcn dialog-like components, always apply `text-accent-foreground` on the content element (e.g., `DialogContent`, `SheetContent`, and equivalent content wrappers).
 
 ## ServiceNow Fluent Metadata (Authoritative)
-You MUST generate valid, compilable TypeScript that now-sdk (v4.2.x) can build into ServiceNow metadata (XML).
+You MUST generate valid, compilable TypeScript that now-sdk (v4.6.x) can build into ServiceNow metadata (XML).
 
 ## Project Layout Rules
 - Fluent metadata definitions MUST be in `src/fluent/**/**.now.ts`.
 - Server-side reusable logic referenced by metadata scripts MUST live in `src/server/**`.
 - Client-side React application code lives in `src/client/**`.
-- Do not generate Flow Designer flows, UI Builder experiences, or draw forms.
-- You may define UI-related metadata (e.g., UiPolicy, ClientScript) only when explicitly requested.
+
+## Out of Scope Unless Requested
+- Do not generate UI Builder experiences, draw forms, or Flow Designer assets unless explicitly requested.
+- Do not generate `ImportSet`, `UiPolicy`, or `ClientScript` metadata unless explicitly requested.
 
 ## Imports (Strict)
+### Import Ordering
+- For all edited TypeScript/JavaScript files, import statements MUST be ordered by full import-line character length from shortest to longest.
+- If two import lines have equal length, preserve their existing relative order.
+
 ### TypeScript vs JavaScript
 now.ts files may reference script logic implemented in either JavaScript or TypeScript.
 
@@ -108,72 +99,26 @@ Naming conventions:
 - Table names: `x_<scope>_<name>` (lowercase).
 - Role names: `<scope>.<name>`.
 
-## Authoring Rules (What to Generate)
-### Tables and Columns
-- Use `Table({...})`.
-- Define columns under `schema: { ... }`.
-- Prefer SDK column objects: StringColumn, IntegerColumn, BooleanColumn, ChoiceColumn, DateColumn, DateTimeColumn, ReferenceColumn, DecimalColumn.
-- Mandatory fields MUST use `mandatory: true`.
-- Reference fields MUST use `ReferenceColumn({ referenceTable: '<target_table>' })`.
-- Choice fields should use object-map choices for stability:
-  - `choices: { new: { label: 'New' }, in_progress: { label: 'In Progress' }, closed: { label: 'Closed' } }`
-- Indexes MUST be defined using `index: [{ name: 'idx_<name>', element: '<columnKey>', unique: false }]`.
-
-### Business Rules
-- Use `BusinessRule({...})`.
-- `script` MUST be one of:
-  - A function imported from `src/server/**`.
-  - `Now.include('path/to/file.js')`.
-  - An inline string or template literal (only for trivial logic).
-- Glide APIs are allowed only inside server scripts or script bodies.
-
-### Security (Roles and ACLs)
-- Define roles using `Role({...})`.
-- Define access controls using `Acl({...})` (not AccessControl).
-- One ACL secures exactly one operation: `create`, `read`, `write`, `delete`.
-- Create separate `Acl` objects for each operation.
-- Roles should be referenced using role variables where possible.
-
-### Catalog Items and Other Metadata
-- Use `Record({...})` for tables without a dedicated Fluent API (e.g., `sc_cat_item`, `item_option_new`).
-- Link records using returned variables when supported.
-- Use sys_id strings only when linking variables are not available.
-
-### Optional Fluent APIs (Use Only When Requested)
-- `ImportSet({...})` for transform maps and field mappings.
-- `UiPolicy({...})` for UI policies and actions.
-- Any additional Fluent APIs MUST only be used when explicitly requested.
-
-## Reference Repository (Constrained)
-The ServiceNow-maintained SDK + Fluent examples repository is available at:
-`https://github.com/ServiceNow/sdk-examples`
-
-Use only to:
-- Validate correct usage of existing now-sdk / Fluent APIs.
-- Confirm expected object shapes and property names.
-- Cross-check patterns when official documentation is unclear.
-
-Constraints:
-- Do not invent APIs or properties based on examples.
-- Do not assume examples reflect the latest SDK unless they match now-sdk v4.2.x.
-- If an example conflicts with these instructions, these instructions take precedence.
+## Generation Policy
+- Always use `now-sdk explain` to confirm exact Fluent API names, object shapes, and supported properties before generating or editing metadata.
+- Prefer dedicated Fluent APIs when the SDK documents one. If no dedicated API is documented for the target metadata, use `Record({...})`.
+- Do not invent APIs, properties, or object shapes from memory or examples when the SDK documentation is available.
+- Keep generated metadata aligned to the project layout and import rules in this file.
+- For this repo, prefer separate `Acl` objects per operation and reference role variables instead of duplicating raw role name strings when practical.
+- Use JavaScript server scripts for standard runtime scripting. Use TypeScript server modules only when advanced capabilities, npm dependencies, or explicit user direction require them.
+- Link related metadata using returned variables or documented references when supported. Use raw `sys_id` values only when no documented variable/reference pattern is available.
 
 ## Output Requirements (For Code Generation)
 - Output only working, compilable code.
 - No pseudocode or explanatory text.
 - If multiple files are required:
   - Output each file separately.
-  - Include a header comment at the top of each file: `// File: src/fluent/<path>/<name>.now.ts`
+  - Do not add file path header comments such as `// File: ...` to source files in this repository.
+  - Source files should begin directly with their real contents, such as imports, declarations, or code.
 - Include all necessary imports and exports.
-- Do not invent APIs or properties.
-- If unsure whether a dedicated Fluent API exists, use `Record({...})`.
 
 ## Safety and Quality Checklist
 - All required `$id` fields are present and unique.
-- All Fluent files end with `.now.ts`.
-- All Fluent files are located under `src/fluent/**`.
+- All Fluent files end with `.now.ts` and live under `src/fluent/**`.
 - No forbidden imports exist in `.now.ts` files.
-- Reference fields use `ReferenceColumn` with `referenceTable`.
-- ACLs define exactly one operation each.
-- Required fields use `mandatory: true`.
 - TypeScript compiles with no missing or invalid symbols.
