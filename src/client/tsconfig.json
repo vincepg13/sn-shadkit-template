@@ -15,8 +15,9 @@
       "vite/client"
     ],
     "allowImportingTsExtensions": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "noEmit": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"

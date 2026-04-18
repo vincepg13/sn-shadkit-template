@@ -83,7 +83,7 @@ To make Vite, Tailwind, and Shadcn work with ServiceNow’s Rollup build process
 
 ## 🤖 AI Agents
 
-The template comes equipped with an `AGENTS.md` file that should help give the necessary context and constraints to working within a ServiceNow fluent/react application. Your AI assistant (claude, codex, gemini etc) should automatically pick this up, but double check if there is any configuration needed with their respective docs.
+The template comes equipped with an `AGENTS.md` file that should help give the necessary context and constraints to working within a ServiceNow fluent/react application. Your AI assistant (claude, codex, gemini etc) should automatically pick this up, but double check if there is any configuration needed with their respective docs. This template makes the assumption that you have the now-sdk-explain skill installed with your AI coding agent.
 
 As you begin building out your application, if you notice incorrect behaviour from your agentic coding assistant, then you should make updates to this file to resolve the issue.
 
