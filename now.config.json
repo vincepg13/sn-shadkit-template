@@ -1,6 +1,6 @@
 {
   "name": "",
   "scope": "",
-  "scopeId": "",
+  "scopeId": "global", //Global lets us run dev server, replace with your actual scope ID when deploying
   "tsconfigPath": "./tsconfig.json"
 }
