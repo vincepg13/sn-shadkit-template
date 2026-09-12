@@ -2,8 +2,9 @@
 import "@/polyfills/array-entries.ts";
 import "@/polyfills/array-from-iterable";
 
+// Tailwind + app styles entry (must be imported so Vite bundles/injects it)
+import "./index.css";
 import React from "react";
-import "./index.build.css";
 import { makeRouter } from "./router.tsx";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router";
@@ -16,7 +17,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 // eslint-disable-next-line no-restricted-globals
 const rootElement = document.getElementById("root");
 
-function syncTailwindCssCacheBuster() {
+function syncServiceNowCssCacheBuster() {
   const entryScript = document.querySelector<HTMLScriptElement>('script[type="module"][src*="main.jsdbx"]');
   if (!entryScript?.src) return;
 
@@ -24,14 +25,10 @@ function syncTailwindCssCacheBuster() {
   const uxpcb = entryUrl.searchParams.get("uxpcb");
   if (!uxpcb) return;
 
-  const stylesheetLinks = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][href*="index.build.css"]');
+  const stylesheetLinks = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][href*="/uxta/"]');
 
   stylesheetLinks.forEach((link) => {
     const stylesheetUrl = new URL(link.href, window.location.href);
-    if (!stylesheetUrl.searchParams.get("path")?.endsWith("index.build.css")) {
-      return;
-    }
-
     if (stylesheetUrl.searchParams.get("uxpcb") === uxpcb) return;
 
     stylesheetUrl.searchParams.set("uxpcb", uxpcb);
@@ -40,7 +37,7 @@ function syncTailwindCssCacheBuster() {
 }
 
 async function main() {
-  syncTailwindCssCacheBuster();
+  syncServiceNowCssCacheBuster();
 
   await bootstrapApp();
   const router = makeRouter();

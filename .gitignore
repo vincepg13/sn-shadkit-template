@@ -5,7 +5,6 @@ node_modules/
 target/
 *.tsbuildinfo
 .jest_cache
-src/client/index.build.css
 
 # Logs
 logs
