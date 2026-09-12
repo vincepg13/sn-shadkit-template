@@ -77,7 +77,7 @@ To make Vite, Tailwind, and Shadcn work with ServiceNow’s Rollup build process
 - **url Plugin** – Map image imports from `src/client/assets` to their deployed counterparts.
 - **Manual Chunking** - Manually chunked some of the larger dependencies sn-shadcn-kit makes use of into their own jsdbx files. These chunks will only apply if you import any components that require them.
 
-*Quick note on tailwind* - If you find when deploying to ServiceNow some tailwind classes you have added to your app do not get applied, then go to the sys_app record for your scope and find the index.build.css application file and delete it, then re-deploy the app. I have noticed sometimes this file doesn't get refreshed when changes have been made to it and i'm not sure why.
+*Quick note on tailwind* - If you find when deploying to ServiceNow some tailwind classes you have added to your app do not get applied, then go to `{instance_url}/cache.do` to clear the cache and then reload the UI Page. I have noticed sometimes this file doesn't get refreshed when changes have been made to it and i'm not sure why.
 
 ---
 
